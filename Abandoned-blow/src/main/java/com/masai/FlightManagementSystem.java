@@ -7,10 +7,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-public class AbandonedBlowApplication {
+public class FlightManagementSystem {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AbandonedBlowApplication.class, args);
+		SpringApplication.run(FlightManagementSystem.class, args);
 	}
 
 }
