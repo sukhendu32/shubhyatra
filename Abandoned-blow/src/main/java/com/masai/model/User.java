@@ -8,7 +8,6 @@ import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Data
 @Entity
 public class User {
