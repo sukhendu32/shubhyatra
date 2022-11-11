@@ -1,4 +1,4 @@
-package com.masai.models;
+package com.masai.model;
 
 public class Customer_Checkout {
 	
