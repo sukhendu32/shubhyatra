@@ -2,6 +2,7 @@ package com.masai.models;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,13 +20,13 @@ public class Booking {
 	
 	private Integer bookingAmount;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Hotel bookedHotel;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Flight bookedFlight;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private TourPackage bookedTourPackage;
 	
 	

@@ -2,12 +2,16 @@ package com.masai.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Customer {
@@ -22,10 +26,12 @@ public class Customer {
 	
 	private Integer walletBalance;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private Feedback feedback;
 	
-	@OneToMany
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Booking> booking;
 	
 	
