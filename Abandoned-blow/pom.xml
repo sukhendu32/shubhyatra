@@ -8,10 +8,10 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.masai</groupId>
-	<artifactId>shubhyatra</artifactId>
+	<groupId>com</groupId>
+	<artifactId>Abandoned-blow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shubhyatra</name>
+	<name>Abandoned-blow</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
@@ -46,14 +46,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter -->
-<dependency>
+		<dependency>
     <groupId>io.springfox</groupId>
     <artifactId>springfox-boot-starter</artifactId>
     <version>3.0.0</version>
 </dependency>
-		
 	</dependencies>
 
 	<build>
