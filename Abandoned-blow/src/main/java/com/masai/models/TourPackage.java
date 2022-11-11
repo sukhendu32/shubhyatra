@@ -1,12 +1,17 @@
-package com.masai.model;
+package com.masai.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TourPackage {
@@ -21,11 +26,14 @@ public class TourPackage {
 	
 	private Integer numberOfdays;
 	
+	@OneToOne(cascade = CascadeType.ALL)
 	private Flight flight;
 	
+	@OneToOne(cascade = CascadeType.ALL)
 	private Hotel hotel;
 	
-	@OneToMany
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<Customer> customer;
 	
 	
