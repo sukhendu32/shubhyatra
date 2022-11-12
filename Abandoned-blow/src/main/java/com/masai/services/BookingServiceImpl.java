@@ -6,6 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exceptions.BookingException;
+import com.masai.exceptions.CustomerException;
+import com.masai.exceptions.FlightException;
 import com.masai.models.Booking;
 import com.masai.models.Customer;
 import com.masai.repository.BookingRepo;
@@ -21,7 +24,7 @@ public class BookingServiceImpl implements BookingService{
 	private CustomerRepo cRepo;
 	
 	@Override
-	public Booking deleteBookingById(Integer bookingId) {
+	public Booking deleteBookingById(Integer bookingId) throws BookingException{
 		
 		Optional<Booking> opt =  bRepo.findById(bookingId);
 		
@@ -35,12 +38,12 @@ public class BookingServiceImpl implements BookingService{
 		}
 		else
 		{
-			return null;
+			throw new BookingException("Booking does not exist with Id "+bookingId);
 		}
 	}
 
 	@Override
-	public List<Booking> viewBookingById(Integer userId) {
+	public List<Booking> viewBookingById(Integer userId) throws CustomerException {
 		
 		Optional<Customer> opt = cRepo.findById(userId);
 		
@@ -54,12 +57,12 @@ public class BookingServiceImpl implements BookingService{
 		}
 		else
 		{
-			return null;
+			throw new CustomerException("Customer does not exist with Id "+userId);
 		}
 	}
 
 	@Override
-	public List<Booking> viewAllBooking() {
+	public List<Booking> viewAllBooking() throws BookingException {
 		
 		List<Booking> b = bRepo.findAll();
 		
@@ -69,7 +72,7 @@ public class BookingServiceImpl implements BookingService{
 		}
 		else
 		{
-			return null;
+			throw new BookingException("No bookings available!");
 		}
 	}
 

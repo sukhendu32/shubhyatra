@@ -1,13 +1,22 @@
 package com.masai.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class Customer_Checkout {
 	
+	@Min(value = 1, message ="Invalid Customer Id!")
 	private Integer customerId;
 	
+	@NotNull @NotEmpty @NotBlank(message = "TourPackage name is mandatory")
 	private String tourPackageName;
 	
+	@NotNull @NotEmpty @NotBlank(message = "Hotel name is mandatory")
 	private String hotelName;
 	
+	@NotNull @NotEmpty @NotBlank(message = "Flight name is mandatory")
 	private String flightName;
 	
 	

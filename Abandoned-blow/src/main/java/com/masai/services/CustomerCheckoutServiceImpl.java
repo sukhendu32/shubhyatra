@@ -8,6 +8,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exceptions.CustomerException;
+import com.masai.exceptions.FlightException;
+import com.masai.exceptions.HotelException;
+import com.masai.exceptions.PaymentException;
+import com.masai.exceptions.TourPackageException;
 import com.masai.models.Booking;
 import com.masai.models.Customer;
 import com.masai.models.Customer_Checkout;
@@ -39,59 +44,93 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 	private CustomerRepo cRepo;
 	
 	@Override
-	public List<Booking> bookService(Customer_Checkout cc){
+	public List<Booking> bookService(Customer_Checkout cc) throws FlightException, HotelException, TourPackageException, CustomerException, PaymentException{
 		
 		Optional<Customer> opt = cRepo.findById(cc.getCustomerId());
-		
-		List<Booking> ans=new ArrayList<>();
 		
 		if(opt.isPresent())
 		{
 			Customer c = opt.get();
 			
-			if(cc.getFlightName().length()>0 && !cc.getFlightName().equals("string")) {
-				
-				
+			if(cc.getFlightName().length()>0 && !cc.getFlightName().equals("string")) 
+			{
+								
 			 Flight f=	fRepo.findByFlightCompany(cc.getFlightName());
 			 
-			 Booking b=new Booking();
+			 if(f!=null)
+			 {
+				 
+				 if(c.getWalletBalance()>=f.getFlightPrice())
+				 {
+					 
+					 
+					 Booking b=new Booking();
+					 
+					 b.setBookedFlight(f);
+					 b.setBookingAmount(f.getFlightPrice());
+					 b.setBookingTime(LocalDateTime.now());
+					 
+					 f.getCustomer().add(c);
+					 
+					 c.getBooking().add(b);
+					 
+					 c.setWalletBalance(c.getWalletBalance()-f.getFlightPrice());
+					 
+					 bRepo.save(b);
+				 }
+				 else
+				 {
+					 throw new PaymentException("Insufficient balance to book the flight!");
+				 }
+				 
+			 }
+			 else
+			 {
+				 throw new FlightException("Flight not found By Name "+cc.getFlightName());
+			 }
 			 
-			 b.setBookedFlight(f);
-			 b.setBookingAmount(f.getFlightPrice());
-			 b.setBookingTime(LocalDateTime.now());
-			 
-			 f.getCustomer().add(c);
-			 
-			 c.getBooking().add(b);
-			 
-			 bRepo.save(b);
-			 
-			 
-			 
-			 ans.add(b);
 			 
 			 
 			}
 			
-			if(cc.getHotelName().length()>0 && !cc.getTourPackageName().equals("string")) {
+			
+			if(cc.getHotelName().length()>0 && !cc.getTourPackageName().equals("string")) 
+			{
 				
 				
 			Hotel h = hRepo.findByHotelName(cc.getHotelName());
 			
-			Booking b = new Booking();
-			
-			b.setBookedHotel(h);
-			b.setBookingAmount(h.getHotelPrice());
-			b.setBookingTime(LocalDateTime.now());
-			
-			h.getCustomer().add(c);
-			
-			c.getBooking().add(b);
-			
-			bRepo.save(b);
-			
-			ans.add(b);
+			if(h!=null)
+			{
 				
+				if(c.getWalletBalance()>=h.getHotelPrice())
+				{
+					Booking b = new Booking();
+					
+					b.setBookedHotel(h);
+					b.setBookingAmount(h.getHotelPrice());
+					b.setBookingTime(LocalDateTime.now());
+					
+					h.getCustomer().add(c);
+					
+					c.getBooking().add(b);
+					
+					c.setWalletBalance(c.getWalletBalance()-h.getHotelPrice());
+					
+					bRepo.save(b);
+					
+				}
+				else
+				{
+					throw new PaymentException("Insufficient balance to book the hotel!");
+				}
+
+			}
+			else
+			{
+				throw new HotelException("Hotel not found by Hotel name "+cc.getHotelName());
+			}
+			
 			}
 			
 			if(cc.getTourPackageName().length()>0 && !cc.getTourPackageName().equals("string"))
@@ -99,33 +138,56 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 				
 				TourPackage t = tRepo.findByTourPackageName(cc.getTourPackageName());
 				
-				Booking b = new Booking();
-				
-				b.setBookedTourPackage(t);
-				b.setBookingAmount(t.getTourPackagePrice());
-				b.setBookingTime(LocalDateTime.now());
-				
-				t.getCustomer().add(c);
-				
-				c.getBooking().add(b);
-				
-				bRepo.save(b);
-				
-				ans.add(b);
+				if(t!=null)
+				{
+					
+					if(c.getWalletBalance()>=t.getTourPackagePrice())
+					{
+						Booking b = new Booking();
+						
+						b.setBookedTourPackage(t);
+						b.setBookingAmount(t.getTourPackagePrice());
+						b.setBookingTime(LocalDateTime.now());
+						
+						t.getCustomer().add(c);
+						
+						c.getBooking().add(b);
+						
+						c.setWalletBalance(c.getWalletBalance()-t.getTourPackagePrice());
+						
+						bRepo.save(b);				
+						
+					}
+					else
+					{
+						throw new PaymentException("Insufficient balance to book the tour package!");
+					}
+					
+				}
+				else
+				{
+					throw new TourPackageException("TourPackage not found by given name "+cc.getTourPackageName());
+				}
+					
+					
 				
 			}
 			
-			return ans;
+			return c.getBooking();
+			
+		}
+		else
+		{
+			throw new CustomerException("Customer not found By Id "+cc.getCustomerId());
 			
 		}
 		
-		return null;
 		
 		
 	}
 
 	@Override
-	public Booking flightBooking(Integer Id, String flightName) {
+	public Booking flightBooking(Integer Id, String flightName) throws FlightException, CustomerException, PaymentException {
 		
 		Optional<Customer> opt = cRepo.findById(Id);
 		
@@ -137,36 +199,51 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 			if(f!=null)
 			{
-				f.getCustomer().add(opt.get());
+				Customer c = opt.get();
 				
-				b.setBookedFlight(f);
-				b.setBookingAmount(f.getFlightPrice());
-				b.setBookingTime(LocalDateTime.now());
-				
-				opt.get().getBooking().add(b);
-				
-				bRepo.save(b);
-				
-				return b;
-				
+				if(c.getWalletBalance()>=f.getFlightPrice())
+				{
+					c.setWalletBalance(c.getWalletBalance()-f.getFlightPrice());
+					
+					cRepo.save(c);
+					
+					
+					f.getCustomer().add(opt.get());
+					
+					b.setBookedFlight(f);
+					b.setBookingAmount(f.getFlightPrice());
+					b.setBookingTime(LocalDateTime.now());
+					
+					opt.get().getBooking().add(b);
+					
+					bRepo.save(b);
+					
+					return b;
+					
+				}
+				else
+				{
+					throw new PaymentException("Insufficient balance!");
+				}
 				
 			}
 			else
 			{
-				return null;
+				throw new FlightException("Flight not found By Name "+flightName);
 			}
 			
 			
 		}
 		else
 		{
-			return null;
+			throw new CustomerException("Customer not found By Id "+Id);
+			
 		}
 		
 	}
 
 	@Override
-	public Booking hotelBooking(Integer Id, String hotelName) {
+	public Booking hotelBooking(Integer Id, String hotelName) throws HotelException, CustomerException, PaymentException {
 		
 		Optional<Customer> opt = cRepo.findById(Id);
 		
@@ -178,31 +255,51 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 			if(h!=null)
 			{
-				h.getCustomer().add(opt.get());
+				Customer c = opt.get();
 				
-				b.setBookedHotel(h);
-				b.setBookingAmount(h.getHotelPrice());
-				b.setBookingTime(LocalDateTime.now());
+				if(c.getWalletBalance()>=h.getHotelPrice())
+				{
+					
+					c.setWalletBalance(c.getWalletBalance()-h.getHotelPrice());
+					
+					cRepo.save(c);
+					
+					h.getCustomer().add(opt.get());
+					
+					b.setBookedHotel(h);
+					b.setBookingAmount(h.getHotelPrice());
+					b.setBookingTime(LocalDateTime.now());
+					
+					opt.get().getBooking().add(b);
+					
+					bRepo.save(b);
+					
+					return b;
+					
+				}
+				else
+				{
+					throw new PaymentException("Insufficient balance!");
+				}
 				
-				opt.get().getBooking().add(b);
-				
-				bRepo.save(b);
-				
-				return b;
 				
 				
 			}
 			
-			return null;
+			else
+			{
+				throw new HotelException("Hotel not found by Hotel name "+hotelName);
+				
+			}
 			
 			
 		}
 		
-		return null;
+		throw new CustomerException("Customer not found by Id "+Id);
 	}
 
 	@Override
-	public Booking tourPackageBooking(Integer Id, String tourPackageName) {
+	public Booking tourPackageBooking(Integer Id, String tourPackageName) throws TourPackageException, CustomerException, PaymentException {
 		
 		Optional<Customer> opt = cRepo.findById(Id);
 		
@@ -214,27 +311,42 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 			if(t!=null)
 			{
-				t.getCustomer().add(opt.get());
+				Customer c = opt.get();
 				
-				b.setBookedTourPackage(t);
-				b.setBookingAmount(t.getTourPackagePrice());
-				b.setBookingTime(LocalDateTime.now());
+				if(c.getWalletBalance()>=t.getTourPackagePrice())
+				{
+					
+					c.setWalletBalance(c.getWalletBalance()-t.getTourPackagePrice());
+					
+					cRepo.save(c);
+					
+					t.getCustomer().add(opt.get());
+					
+					b.setBookedTourPackage(t);
+					b.setBookingAmount(t.getTourPackagePrice());
+					b.setBookingTime(LocalDateTime.now());
+					
+					opt.get().getBooking().add(b);
+					
+					bRepo.save(b);
+					
+					return b;
+				}
+				else
+				{
+					throw new PaymentException("Insufficient balance!");
+				}
 				
-				opt.get().getBooking().add(b);
-				
-				bRepo.save(b);
-				
-				return b;
 			}
 			else
 			{
-				return null;
+				throw new TourPackageException("TourPackage not found by given name "+tourPackageName);
 			}
 			
 		}
 		else
 		{
-			return null;
+			throw new CustomerException("Customer not found by Id "+Id);
 		}
 		
 	}
