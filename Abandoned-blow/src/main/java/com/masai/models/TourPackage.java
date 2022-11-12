@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,10 +24,12 @@ public class TourPackage {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer tourPackageId;
 	
+	@NotNull @NotEmpty @NotBlank(message = "TourPackage name is mandatory")
 	private String tourPackageName;
 	
 	private Integer tourPackagePrice;
 	
+	@Min(value = 1, message = "Number of days must be greater than 0")
 	private Integer numberOfdays;
 	
 	@OneToOne(cascade = CascadeType.ALL)

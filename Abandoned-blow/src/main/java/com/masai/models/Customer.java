@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,13 +25,17 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer customerId;
 	
+	@NotNull @NotBlank @NotEmpty(message = "Name is mandatory") 
 	private String customerName;
 	
+	@NotNull @Pattern(regexp = "[0-9]{10}",message = "Mobile number should be of 10 digits")
 	private String customerMobile;
 	
+	@NotNull(message = "wallet balance is mandatory") 
+	@Min(value = 1000, message = "Minimum wallet balance is 1000")
 	private Integer walletBalance;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JsonIgnore
 	private Feedback feedback;
 	

@@ -10,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,8 +24,10 @@ public class Flight {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer flightId;
 	
+	@NotNull @NotEmpty @NotBlank(message = "Flight company name is mandatory")
 	private String flightCompany;
 	
+	@Min(value = 1, message = "Minimum seat available is 1")
 	private Integer availableSeats;
 	
 	private Integer flightPrice;

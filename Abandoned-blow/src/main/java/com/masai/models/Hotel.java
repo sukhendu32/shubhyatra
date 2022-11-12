@@ -8,6 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,14 +23,18 @@ public class Hotel {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer hotelId;
 	
+	@NotNull @NotEmpty @NotBlank(message = "Hotel name is mandatory")
 	private String hotelName;
 	
+	@NotNull @NotEmpty @NotBlank(message = "Hotel location is mandatory")
 	private String hotelLocation;
 	
 	private Integer hotelPrice;
 	
+	@Min(value = 0, message = "Rating should not be less than 0") @Max(value = 5 , message = "Rating should not be greater 5")
 	private Integer hotelRating;
 	
+	@Min(value = 1, message = "Minimum availabe rooms is 1")
 	private Integer availableRooms;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
