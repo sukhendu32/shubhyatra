@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.exception.HotelException;
 import com.masai.models.Hotel;
 import com.masai.services.HotelService;
 
@@ -21,13 +22,13 @@ public class HotelController {
 	private HotelService hService;
 	
 	@PostMapping("/hotel")
-	public Hotel registerHotel(@RequestBody Hotel hotel)
+	public Hotel registerHotel(@RequestBody Hotel hotel) throws HotelException
 	{
 		return hService.registerHotel(hotel);
 	}
 	
 	@DeleteMapping("/hotel/{Id}/{user}")
-	public Hotel deleteHotel(@PathVariable("Id") Integer Id, @PathVariable("user") String user)
+	public Hotel deleteHotel(@PathVariable("Id") Integer Id, @PathVariable("user") String user) throws HotelException
 	{
 		if(user.equals("admin"))
 		{
@@ -41,7 +42,7 @@ public class HotelController {
 	}
 	
 	@GetMapping("/hotel")
-	public List<Hotel> viewAllHotel()
+	public List<Hotel> viewAllHotel() throws HotelException
 	{
 		return hService.viewAllHotel();
 	}

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.exception.FlightException;
 import com.masai.models.Flight;
 import com.masai.services.FlightService;
 
@@ -20,19 +21,19 @@ public class FlightController {
 	private FlightService fService;
 	
 	@PostMapping("/flight")
-	public Flight registerFlight(@RequestBody Flight flight)
+	public Flight registerFlight(@RequestBody Flight flight) throws FlightException
 	{
 		return fService.registerFlight(flight);
 	}
 	
 	@DeleteMapping("/flight/{Id}")
-	public Flight deleteFlight(@PathVariable("Id") Integer Id)
+	public Flight deleteFlight(@PathVariable("Id") Integer Id) throws FlightException
 	{
 		return fService.deleteFlightById(Id);
 	}
 	
 	@GetMapping("/flight")
-	public List<Flight> viewAllFlight()
+	public List<Flight> viewAllFlight() throws FlightException
 	{
 		return fService.viewAllFlight();
 		

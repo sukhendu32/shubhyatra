@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exception.HotelException;
 import com.masai.models.Hotel;
 import com.masai.repository.HotelRepo;
 
@@ -16,7 +17,7 @@ public class HotelServiceImpl implements HotelService{
 	private HotelRepo hRepo;
 	
 	@Override
-	public Hotel registerHotel(Hotel hotel) {
+	public Hotel registerHotel(Hotel hotel) throws HotelException{
 		
 		Hotel h = hRepo.save(hotel);
 		
@@ -31,7 +32,7 @@ public class HotelServiceImpl implements HotelService{
 	}
 
 	@Override
-	public Hotel deleteHotelById(Integer hotelId) {
+	public Hotel deleteHotelById(Integer hotelId) throws HotelException{
 		
 		Optional<Hotel> opt = hRepo.findById(hotelId);
 		
@@ -48,7 +49,7 @@ public class HotelServiceImpl implements HotelService{
 	}
 
 	@Override
-	public List<Hotel> viewAllHotel() {
+	public List<Hotel> viewAllHotel() throws HotelException{
 		
 		List<Hotel> list = hRepo.findAll();
 		

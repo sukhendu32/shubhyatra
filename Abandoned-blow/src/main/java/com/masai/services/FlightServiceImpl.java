@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exception.FlightException;
 import com.masai.models.Flight;
 import com.masai.repository.FlightRepo;
 
@@ -16,7 +17,7 @@ public class FlightServiceImpl  implements FlightService{
 	private FlightRepo fRepo; 
 	
 	@Override
-	public Flight registerFlight(Flight flight) {
+	public Flight registerFlight(Flight flight) throws FlightException{
 		
 		Flight f = fRepo.save(flight);
 		
@@ -31,7 +32,7 @@ public class FlightServiceImpl  implements FlightService{
 	}
 
 	@Override
-	public Flight deleteFlightById(Integer flightId) {
+	public Flight deleteFlightById(Integer flightId) throws FlightException{
 		
 		Optional<Flight> opt = fRepo.findById(flightId);
 		
@@ -50,7 +51,7 @@ public class FlightServiceImpl  implements FlightService{
 	}
 
 	@Override
-	public List<Flight> viewAllFlight() {
+	public List<Flight> viewAllFlight() throws FlightException {
 		List<Flight> list = fRepo.findAll();
 		
 		if(list.size()>0)
