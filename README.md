@@ -12,7 +12,7 @@ This API performs all the fundamental CRUD operations and business logics of any
 
 # Tech Stack
 
-#ER Diagram 
+# ER Diagram 
 
 
 
