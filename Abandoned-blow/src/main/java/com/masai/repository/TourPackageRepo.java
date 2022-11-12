@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.masai.models.TourPackage;
 
 @Repository
-public interface TourPackageRepo extends JpaRepository<TourPackage, Integer>{
+public interface TourPackageRepo extends JpaRepository<TourPackage, Integer> {
 
 	public TourPackage findByTourPackageName(String name);
 }

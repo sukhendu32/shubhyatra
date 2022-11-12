@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exception.TourPackageException;
 import com.masai.models.TourPackage;
 import com.masai.repository.TourPackageRepo;
 
@@ -16,7 +17,7 @@ public class TourPackageServiceImpl implements TourPackageService{
 	private TourPackageRepo tRepo;
 	
 	@Override
-	public TourPackage registerTourPackage(TourPackage tourPackage) {
+	public TourPackage registerTourPackage(TourPackage tourPackage) throws TourPackageException{
 		
 		TourPackage t = tRepo.save(tourPackage);
 		
@@ -31,7 +32,7 @@ public class TourPackageServiceImpl implements TourPackageService{
 	}
 
 	@Override
-	public TourPackage deleteTourPackageById(Integer tourPackageId) {
+	public TourPackage deleteTourPackageById(Integer tourPackageId) throws TourPackageException{
 		
 		Optional<TourPackage> opt = tRepo.findById(tourPackageId);
 		
