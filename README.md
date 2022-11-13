@@ -11,11 +11,9 @@ Collaborative project consisting of 5 members.
 - <a href="https://github.com/Kunal-Ladhani">Kunal Ladhani</a>
 
 # Logo
-![Logo](https://user-images.githubusercontent.com/102024693/201505651-b0c7bfbd-fd9c-4272-9446-5052ab833114.jpg)
 
 <p align="center">
- 
-  <img src="/ReadmeImage/Logo.jpg" width="350" alt="accessibility text">
+  <img src="/ReadmeImage/Logo.jpg" width="550" alt="accessibility text">
 </p>
 
 # Online Trip Managment System - REST API
