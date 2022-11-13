@@ -80,6 +80,7 @@ Flight Module
 * Tomcat server
 
 # ER Diagram 
+![er-digram](https://user-images.githubusercontent.com/102024693/201505821-19a7fd47-90bc-4e75-a538-bc761f70ad34.jpg)
 
 # Documentation
 
