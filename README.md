@@ -24,9 +24,9 @@ This API performs all the fundamental CRUD operations and business logics of any
 
 # Features
 
-* Customer Features :
+# Customer Features :
 
--Customer can register themselves with minimum wallet balance og Rs.500.
+- Customer can register themselves with minimum wallet balance og Rs.500.
 
 - Customer can book hotels, flights and tourpackages.
 
@@ -36,7 +36,7 @@ This API performs all the fundamental CRUD operations and business logics of any
 
 - Customer can give feedback.
 
-* Admin Features :
+# Admin Features :
 
 - Admin can view all customer, delete customer and update a customer details.
 
