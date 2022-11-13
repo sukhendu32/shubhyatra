@@ -19,7 +19,7 @@ import com.masai.repository.UserRepository;
 public class FeedbackSericeImpl implements FeedbackService{
 
 	@Autowired
-	private FeedbackRepository feedbackDao;
+	private FeedbackRepository feedbackRepository;
 	
 	@Autowired
 	 private SessionRepository sessionRepository;
@@ -49,7 +49,7 @@ public class FeedbackSericeImpl implements FeedbackService{
 		
 		feedback.setUser(user);
 		
-		return feedbackDao.save(feedback);
+		return feedbackRepository.save(feedback);
 		
 		
 	}
@@ -57,7 +57,7 @@ public class FeedbackSericeImpl implements FeedbackService{
 	@Override
 	public Feedback findByFeedbackId(Integer feedbackId) throws FeedbackException {
 		
-		Optional<Feedback> optFeedback= feedbackDao.findById(feedbackId);
+		Optional<Feedback> optFeedback= feedbackRepository.findById(feedbackId);
 		
 		if(!optFeedback.isPresent())
 		{
@@ -126,7 +126,7 @@ public class FeedbackSericeImpl implements FeedbackService{
 				throw new FeedbackException("Only admins can access this feature");
 			}
 			
-			List<Feedback> ansList=feedbackDao.getAllFeedbacks();
+			List<Feedback> ansList=feedbackRepository.getAllFeedbacks();
 			
 			return ansList;
 			
