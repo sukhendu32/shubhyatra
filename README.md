@@ -13,6 +13,11 @@ Collaborative project consisting of 5 members.
 # Logo
 ![Logo](https://user-images.githubusercontent.com/102024693/201505651-b0c7bfbd-fd9c-4272-9446-5052ab833114.jpg)
 
+<p align="center">
+ 
+  <img src="/ReadmeImage/Logo.jpg" width="350" alt="accessibility text">
+</p>
+
 # Online Trip Managment System - REST API
 
 This is a online trip management system application where user can book tour packages which include hotel and flight booking services.
