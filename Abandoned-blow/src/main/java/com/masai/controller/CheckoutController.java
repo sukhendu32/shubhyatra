@@ -35,24 +35,24 @@ public class CheckoutController {
 		return new ResponseEntity<List<Booking>>(list, HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/checkoutFlight/{Id}/{flightName}")
-	public ResponseEntity<Booking> flightBooking(@PathVariable("Id") Integer Id,@Valid @PathVariable("flightName") String flightName) throws FlightException, CustomerException, PaymentException
+	@PostMapping("/checkoutFlight/{customerId}/{flightName}")
+	public ResponseEntity<Booking> flightBooking(@PathVariable("customerId") Integer Id,@Valid @PathVariable("flightName") String flightName) throws FlightException, CustomerException, PaymentException
 	{
 		Booking b = cService.flightBooking(Id, flightName);
 		
 		return new ResponseEntity<Booking>(b,HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/checkoutHotel/{Id}/{hotelName}")
-	public ResponseEntity<Booking> hotelBooking(@PathVariable("Id") Integer Id,@Valid @PathVariable("hotelName") String hotelName) throws HotelException, CustomerException, PaymentException
+	@PostMapping("/checkoutHotel/{customerId}/{hotelName}")
+	public ResponseEntity<Booking> hotelBooking(@PathVariable("customerId") Integer Id,@Valid @PathVariable("hotelName") String hotelName) throws HotelException, CustomerException, PaymentException
 	{
 		Booking b = cService.hotelBooking(Id, hotelName);
 		
 		return new ResponseEntity<Booking>(b, HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/checkoutTourPackage/{Id}/{tourPackageName}")
-	public ResponseEntity<Booking> tourPackageBooking(@PathVariable("Id") Integer Id,@Valid @PathVariable("tourPackageName") String tourPackageName) throws TourPackageException, CustomerException, PaymentException
+	@PostMapping("/checkoutTourPackage/{customerId}/{tourPackageName}")
+	public ResponseEntity<Booking> tourPackageBooking(@PathVariable("customerId") Integer Id,@Valid @PathVariable("tourPackageName") String tourPackageName) throws TourPackageException, CustomerException, PaymentException
 	{
 		Booking b = cService.tourPackageBooking(Id, tourPackageName);
 		

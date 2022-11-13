@@ -23,8 +23,8 @@ public class BookingController {
 	@Autowired
 	private BookingService bService;
 	
-	@GetMapping("/booking/{Id}")
-	public ResponseEntity<List<Booking>>  viewBookingById(@PathVariable("Id") Integer Id) throws CustomerException
+	@GetMapping("/booking/{customerId}")
+	public ResponseEntity<List<Booking>>  viewBookingById(@PathVariable("customerId") Integer Id) throws CustomerException
 	{
 		List<Booking> list = bService.viewBookingById(Id);
 		
@@ -39,8 +39,8 @@ public class BookingController {
 		return new ResponseEntity<List<Booking>>(list, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/booking/{Id}")
-	public ResponseEntity<Booking> deleteBookingById(@PathVariable("Id") Integer Id) throws BookingException
+	@DeleteMapping("/booking/{bookingId}")
+	public ResponseEntity<Booking> deleteBookingById(@PathVariable("bookingId") Integer Id) throws BookingException
 	{
 		Booking b  = bService.deleteBookingById(Id);
 		

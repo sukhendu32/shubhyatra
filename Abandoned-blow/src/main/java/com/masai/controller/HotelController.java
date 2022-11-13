@@ -32,8 +32,8 @@ public class HotelController {
 		return new ResponseEntity<Hotel>(h, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/hotel/{userId}")
-	public ResponseEntity<Hotel> deleteHotel(@PathVariable("userId") Integer Id) throws HotelException
+	@DeleteMapping("/hotel/{hotelId}")
+	public ResponseEntity<Hotel> deleteHotel(@PathVariable("hotelId") Integer Id) throws HotelException
 	{
 		
 			Hotel h = hService.deleteHotelById(Id); 
@@ -48,8 +48,8 @@ public class HotelController {
 		return new ResponseEntity<List<Hotel>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("/hotel/{userId}")
-	public ResponseEntity<Hotel> findHotelById(@PathVariable("userId") Integer Id) throws HotelException
+	@GetMapping("/hotel/{customerId}")
+	public ResponseEntity<Hotel> findHotelById(@PathVariable("customerId") Integer Id) throws HotelException
 	{
 		
 			Hotel h = hService.findHotelById(Id); 

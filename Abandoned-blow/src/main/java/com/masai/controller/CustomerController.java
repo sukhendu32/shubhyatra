@@ -32,8 +32,8 @@ public class CustomerController {
 		return 	new ResponseEntity<Customer>(c,HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/customer/{userId}")
-	public ResponseEntity<Customer> deleteCustomer(@PathVariable("userId") Integer Id) throws CustomerException
+	@DeleteMapping("/customer/{customerId}")
+	public ResponseEntity<Customer> deleteCustomer(@PathVariable("customerId") Integer Id) throws CustomerException
 	{
 		Customer c = cService.deleteCustomerById(Id);
 		return new ResponseEntity<Customer>(c,HttpStatus.OK);

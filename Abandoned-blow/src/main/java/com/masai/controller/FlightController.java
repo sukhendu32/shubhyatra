@@ -32,8 +32,8 @@ public class FlightController {
 		return new ResponseEntity<Flight>(f, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/flight/{userId}")
-	public ResponseEntity<Flight> deleteFlight(@PathVariable("userId") Integer Id) throws FlightException
+	@DeleteMapping("/flight/{flightId}")
+	public ResponseEntity<Flight> deleteFlight(@PathVariable("flightId") Integer Id) throws FlightException
 	{
 		Flight f = fService.deleteFlightById(Id);
 		return new ResponseEntity<Flight>(f,HttpStatus.OK);

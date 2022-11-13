@@ -32,8 +32,8 @@ public class TourPackageController {
 		return new ResponseEntity<TourPackage>(t, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/tourPackage/{userId}")
-	public ResponseEntity<TourPackage> deleteTourPackage(@PathVariable("userId") Integer Id) throws TourPackageException
+	@DeleteMapping("/tourPackage/{tourPackageId}")
+	public ResponseEntity<TourPackage> deleteTourPackage(@PathVariable("tourPackageId") Integer Id) throws TourPackageException
 	{
 		TourPackage t = tService.deleteTourPackageById(Id);
 		
@@ -48,8 +48,8 @@ public class TourPackageController {
 		return new ResponseEntity<List<TourPackage>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("/tourPackage/{userId}")
-	public ResponseEntity<TourPackage> findTourPackage(@PathVariable("userId") Integer Id) throws TourPackageException
+	@GetMapping("/tourPackage/{customerId}")
+	public ResponseEntity<TourPackage> findTourPackage(@PathVariable("customerId") Integer Id) throws TourPackageException
 	{
 		TourPackage t = tService.findTourPackageById(Id);
 		
