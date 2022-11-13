@@ -13,7 +13,7 @@ Collaborative project consisting of 5 members.
 # Logo
 
 <p align="left">
-  <img src="/ReadmeImage/Logo.jpg" width="550" alt="accessibility text">
+  <img src="/ReadmeImage/Logo.jpg" width="450" alt="accessibility text">
 </p>
 
 # Online Trip Managment System - REST API
