@@ -4,6 +4,11 @@
 Collaborative project consisting of 5 members.
 
 #Team members:
+- <a href="https://github.com/sukhendu32">Sukhendu</a>
+- <a href="https://github.com/aman1080phd"> Aman Kumar</a>
+- <a href="https://github.com/Mansi-Deshmukh">Mansi Deshmukh</a>
+- <a href="https://github.com/tanuk11">Tanya Kiran</a>
+- <a href="https://github.com/Kunal-Ladhani">Kunal Ladhani</a>
 
 #LOGO
 
