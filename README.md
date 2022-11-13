@@ -12,7 +12,7 @@ Collaborative project consisting of 5 members.
 
 # Logo
 
-<p align="center">
+<p align="left">
   <img src="/ReadmeImage/Logo.jpg" width="550" alt="accessibility text">
 </p>
 
