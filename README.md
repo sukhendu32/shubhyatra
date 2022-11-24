@@ -58,6 +58,8 @@ Report Module
 
 TourPackage Module
 
+Checkout Module
+
 Flight Module
 
 # Tech Stack
