@@ -6,8 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.exceptions.HotelException;
 import com.masai.exceptions.TourPackageException;
+import com.masai.models.Booking;
 import com.masai.models.TourPackage;
+import com.masai.repository.BookingRepo;
 import com.masai.repository.TourPackageRepo;
 
 @Service
@@ -15,6 +18,9 @@ public class TourPackageServiceImpl implements TourPackageService{
 
 	@Autowired
 	private TourPackageRepo tRepo;
+	
+	@Autowired
+	private BookingRepo bRepo;
 	
 	@Override
 	public TourPackage registerTourPackage(TourPackage tourPackage) throws TourPackageException {
@@ -38,6 +44,16 @@ public class TourPackageServiceImpl implements TourPackageService{
 		
 		if(opt.isPresent())
 		{
+			List<Booking> list = bRepo.findAll();
+			
+			for(Booking b:list)
+			{
+				if(b.getBookedTourPackage().equals(opt.get()))
+				{
+					throw new TourPackageException("This TourPackage has bookings!");
+				}
+			}
+			
 			tRepo.delete(opt.get());
 			
 			return opt.get();

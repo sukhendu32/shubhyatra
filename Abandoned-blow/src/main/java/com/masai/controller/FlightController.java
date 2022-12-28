@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exceptions.FlightException;
@@ -20,19 +21,20 @@ import com.masai.models.Flight;
 import com.masai.services.FlightService;
 
 @RestController
+@RequestMapping("/travel")
 public class FlightController {
 	
 	@Autowired
 	private FlightService fService;
 	
-	@PostMapping("/flight")
+	@PostMapping("/admin/flight")
 	public ResponseEntity<Flight>  registerFlight(@Valid @RequestBody Flight flight) throws FlightException
 	{
 		Flight f = fService.registerFlight(flight);
 		return new ResponseEntity<Flight>(f, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/flight/{flightId}")
+	@DeleteMapping("/admin/flight/{flightId}")
 	public ResponseEntity<Flight> deleteFlight(@PathVariable("flightId") Integer Id) throws FlightException
 	{
 		Flight f = fService.deleteFlightById(Id);
@@ -56,7 +58,7 @@ public class FlightController {
 		return new ResponseEntity<Flight>(f,HttpStatus.OK);
 	}
 	
-	@PutMapping("/flight")
+	@PutMapping("/admin/flight")
 	public ResponseEntity<Flight> updateFlightDetails(@Valid @RequestBody Flight flight) throws FlightException
 	{
 		Flight f = fService.updateFlight(flight);

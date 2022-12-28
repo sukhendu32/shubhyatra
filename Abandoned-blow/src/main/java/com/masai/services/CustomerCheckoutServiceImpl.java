@@ -8,19 +8,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.exceptions.CustomerException;
+import com.masai.exceptions.UserException;
 import com.masai.exceptions.FlightException;
 import com.masai.exceptions.HotelException;
 import com.masai.exceptions.PaymentException;
 import com.masai.exceptions.TourPackageException;
 import com.masai.models.Booking;
-import com.masai.models.Customer;
+import com.masai.models.User;
 import com.masai.models.Customer_Checkout;
 import com.masai.models.Flight;
 import com.masai.models.Hotel;
 import com.masai.models.TourPackage;
 import com.masai.repository.BookingRepo;
-import com.masai.repository.CustomerRepo;
+import com.masai.repository.UserRepo;
 import com.masai.repository.FlightRepo;
 import com.masai.repository.HotelRepo;
 import com.masai.repository.TourPackageRepo;
@@ -41,16 +41,16 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 	private TourPackageRepo tRepo;
 	
 	@Autowired
-	private CustomerRepo cRepo;
+	private UserRepo cRepo;
 	
 	@Override
-	public List<Booking> bookService(Customer_Checkout cc) throws FlightException, HotelException, TourPackageException, CustomerException, PaymentException{
+	public List<Booking> bookService(Customer_Checkout cc) throws FlightException, HotelException, TourPackageException, UserException, PaymentException{
 		
-		Optional<Customer> opt = cRepo.findById(cc.getCustomerId());
+		Optional<User> opt = cRepo.findById(cc.getCustomerId());
 		
 		if(opt.isPresent())
 		{
-			Customer c = opt.get();
+			User c = opt.get();
 			
 			if(cc.getFlightName().length()>0 && !cc.getFlightName().equals("string")) 
 			{
@@ -70,7 +70,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 					 b.setBookingAmount(f.getFlightPrice());
 					 b.setBookingTime(LocalDateTime.now());
 					 
-					 f.getCustomer().add(c);
+//					 f.getCustomer().add(c);
 					 
 					 c.getBooking().add(b);
 					 
@@ -111,7 +111,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 					b.setBookingAmount(h.getHotelPrice());
 					b.setBookingTime(LocalDateTime.now());
 					
-					h.getCustomer().add(c);
+//					h.getCustomer().add(c);
 					
 					c.getBooking().add(b);
 					
@@ -149,7 +149,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 						b.setBookingAmount(t.getTourPackagePrice());
 						b.setBookingTime(LocalDateTime.now());
 						
-						t.getCustomer().add(c);
+//						t.getCustomer().add(c);
 						
 						c.getBooking().add(b);
 						
@@ -178,7 +178,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 		}
 		else
 		{
-			throw new CustomerException("Customer not found By Id "+cc.getCustomerId());
+			throw new UserException("Customer not found By Id "+cc.getCustomerId());
 			
 		}
 		
@@ -187,9 +187,9 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 	}
 
 	@Override
-	public Booking flightBooking(Integer Id, String flightName) throws FlightException, CustomerException, PaymentException {
+	public Booking flightBooking(Integer Id, String flightName) throws FlightException, UserException, PaymentException {
 		
-		Optional<Customer> opt = cRepo.findById(Id);
+		Optional<User> opt = cRepo.findById(Id);
 		
 		if(opt.isPresent())
 		{
@@ -199,7 +199,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 			if(f!=null)
 			{
-				Customer c = opt.get();
+				User c = opt.get();
 				
 				if(c.getWalletBalance()>=f.getFlightPrice())
 				{
@@ -208,7 +208,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 					cRepo.save(c);
 					
 					
-					f.getCustomer().add(opt.get());
+//					f.getCustomer().add(opt.get());
 					
 					b.setBookedFlight(f);
 					b.setBookingAmount(f.getFlightPrice());
@@ -236,16 +236,16 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 		}
 		else
 		{
-			throw new CustomerException("Customer not found By Id "+Id);
+			throw new UserException("Customer not found By Id "+Id);
 			
 		}
 		
 	}
 
 	@Override
-	public Booking hotelBooking(Integer Id, String hotelName) throws HotelException, CustomerException, PaymentException {
+	public Booking hotelBooking(Integer Id, String hotelName) throws HotelException, UserException, PaymentException {
 		
-		Optional<Customer> opt = cRepo.findById(Id);
+		Optional<User> opt = cRepo.findById(Id);
 		
 		if(opt.isPresent())
 		{
@@ -255,7 +255,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 			if(h!=null)
 			{
-				Customer c = opt.get();
+				User c = opt.get();
 				
 				if(c.getWalletBalance()>=h.getHotelPrice())
 				{
@@ -264,7 +264,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 					
 					cRepo.save(c);
 					
-					h.getCustomer().add(opt.get());
+//					h.getCustomer().add(opt.get());
 					
 					b.setBookedHotel(h);
 					b.setBookingAmount(h.getHotelPrice());
@@ -295,13 +295,13 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 		}
 		
-		throw new CustomerException("Customer not found by Id "+Id);
+		throw new UserException("Customer not found by Id "+Id);
 	}
 
 	@Override
-	public Booking tourPackageBooking(Integer Id, String tourPackageName) throws TourPackageException, CustomerException, PaymentException {
+	public Booking tourPackageBooking(Integer Id, String tourPackageName) throws TourPackageException, UserException, PaymentException {
 		
-		Optional<Customer> opt = cRepo.findById(Id);
+		Optional<User> opt = cRepo.findById(Id);
 		
 		if(opt.isPresent())
 		{
@@ -311,7 +311,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 			
 			if(t!=null)
 			{
-				Customer c = opt.get();
+				User c = opt.get();
 				
 				if(c.getWalletBalance()>=t.getTourPackagePrice())
 				{
@@ -320,7 +320,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 					
 					cRepo.save(c);
 					
-					t.getCustomer().add(opt.get());
+//					t.getCustomer().add(opt.get());
 					
 					b.setBookedTourPackage(t);
 					b.setBookingAmount(t.getTourPackagePrice());
@@ -346,7 +346,7 @@ public class CustomerCheckoutServiceImpl implements CustomerCheckoutService{
 		}
 		else
 		{
-			throw new CustomerException("Customer not found by Id "+Id);
+			throw new UserException("Customer not found by Id "+Id);
 		}
 		
 	}

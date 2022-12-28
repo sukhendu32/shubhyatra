@@ -30,14 +30,12 @@ public class Flight {
 	@Min(value = 1, message = "Minimum seat available is 1")
 	private Integer availableSeats;
 	
+	@NotNull(message = "Flight price is mandatory") 
+	@Min(value = 500, message = "Minimum flight price is 500")
 	private Integer flightPrice;
 	
 	@Embedded
 	private Route route;
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Customer> customer;
 	
 	
 	public Flight() {
@@ -46,14 +44,14 @@ public class Flight {
 
 
 	public Flight(Integer flightId, String flightCompany, Integer availableSeats, Integer flightPrice, Route route,
-			List<Customer> customer) {
+			List<User> customer) {
 		super();
 		this.flightId = flightId;
 		this.flightCompany = flightCompany;
 		this.availableSeats = availableSeats;
 		this.flightPrice = flightPrice;
 		this.route = route;
-		this.customer = customer;
+		
 	}
 
 
@@ -107,20 +105,13 @@ public class Flight {
 	}
 
 
-	public List<Customer> getCustomer() {
-		return customer;
-	}
-
-
-	public void setCustomer(List<Customer> customer) {
-		this.customer = customer;
-	}
+	
 
 
 	@Override
 	public String toString() {
 		return "Flight [flightId=" + flightId + ", flightCompany=" + flightCompany + ", availableSeats="
-				+ availableSeats + ", flightPrice=" + flightPrice + ", route=" + route + ", customer=" + customer + "]";
+				+ availableSeats + ", flightPrice=" + flightPrice + ", route=" + route + ", customer=]";
 	}
 	
 	

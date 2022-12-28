@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.masai.exceptions.CustomerException;
+import com.masai.exceptions.UserException;
 import com.masai.exceptions.TestimonialException;
-import com.masai.models.Customer;
+import com.masai.models.User;
 import com.masai.models.Feedback;
 import com.masai.models.Report;
-import com.masai.repository.CustomerRepo;
+import com.masai.repository.UserRepo;
 import com.masai.repository.FeedbackRepo;
 import com.masai.repository.ReportRepo;
 
@@ -19,7 +19,7 @@ import com.masai.repository.ReportRepo;
 public class TestimonialServiceImpl implements TestimonialService{
 
 	@Autowired
-	private CustomerRepo cRepo;
+	private UserRepo cRepo;
 	
 	@Autowired
 	private FeedbackRepo fRepo;
@@ -28,13 +28,13 @@ public class TestimonialServiceImpl implements TestimonialService{
 	private ReportRepo rRepo;
 	
 	@Override
-	public Feedback customerFeedback(Integer customerId, Feedback feedback) throws CustomerException 
+	public Feedback customerFeedback(Integer customerId, Feedback feedback) throws UserException 
 	{
-		Optional<Customer> opt = cRepo.findById(customerId);
+		Optional<User> opt = cRepo.findById(customerId);
 		
 		if(opt.isPresent())
 		{
-			Customer c = opt.get();
+			User c = opt.get();
 			
 			Feedback f = fRepo.save(feedback);
 			
@@ -46,7 +46,7 @@ public class TestimonialServiceImpl implements TestimonialService{
 		}
 		else
 		{
-			throw new CustomerException("Customer not found with Id "+customerId);
+			throw new UserException("Customer not found with Id "+customerId);
 		}
 		
 		
@@ -78,19 +78,19 @@ public class TestimonialServiceImpl implements TestimonialService{
 	}
 
 	@Override
-	public Feedback findFeedbackById(Integer customerId) throws CustomerException {
+	public Feedback findFeedbackById(Integer customerId) throws UserException {
 		
-		Optional<Customer> opt =  cRepo.findById(customerId);
+		Optional<User> opt =  cRepo.findById(customerId);
 		
 		if(opt.isPresent())
 		{
-			Customer c = opt.get();
+			User c = opt.get();
 			
 			return c.getFeedback();
 		}
 		else
 		{
-			throw new CustomerException("Customer not found by given Id"+ customerId);
+			throw new UserException("Customer not found by given Id"+ customerId);
 		}
 	}
 

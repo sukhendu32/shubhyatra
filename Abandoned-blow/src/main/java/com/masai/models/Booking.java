@@ -20,13 +20,13 @@ public class Booking {
 	
 	private Integer bookingAmount;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Hotel bookedHotel;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Flight bookedFlight;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private TourPackage bookedTourPackage;
 	
 	

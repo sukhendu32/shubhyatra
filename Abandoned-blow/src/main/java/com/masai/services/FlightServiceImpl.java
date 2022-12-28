@@ -7,14 +7,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.exceptions.FlightException;
+import com.masai.exceptions.HotelException;
+import com.masai.models.Booking;
 import com.masai.models.Flight;
+import com.masai.models.TourPackage;
+import com.masai.repository.BookingRepo;
 import com.masai.repository.FlightRepo;
+import com.masai.repository.TourPackageRepo;
 
 @Service
 public class FlightServiceImpl  implements FlightService{
 
 	@Autowired
 	private FlightRepo fRepo; 
+	
+	@Autowired
+	private BookingRepo bRepo;
+	
+	@Autowired
+	private TourPackageRepo tRepo;
 	
 	@Override
 	public Flight registerFlight(Flight flight) throws FlightException {
@@ -38,6 +49,26 @@ public class FlightServiceImpl  implements FlightService{
 		
 		if(opt.isPresent())
 		{
+			List<Booking> list = bRepo.findAll();
+			
+			for(Booking b:list)
+			{
+				if(b.getBookedFlight().equals(opt.get()))
+				{
+					throw new FlightException("This Flight has bookings!");
+				}
+			}
+			
+			List<TourPackage> listTour  = tRepo.findAll();
+			
+			for(TourPackage t:listTour)
+			{
+				if(t.getFlight().getFlightId()==flightId)
+				{
+					throw new FlightException("This flight is registered with TourPackage!");
+				}
+			}
+			
 			Flight f2 = opt.get();
 			
 			fRepo.delete(f2);

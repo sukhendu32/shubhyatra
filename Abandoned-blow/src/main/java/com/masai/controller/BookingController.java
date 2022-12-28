@@ -9,22 +9,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exceptions.BookingException;
-import com.masai.exceptions.CustomerException;
+import com.masai.exceptions.UserException;
 import com.masai.models.Booking;
 import com.masai.services.BookingService;
 
 @RestController
+@RequestMapping("/travel/customer")
 public class BookingController {
 	
 	@Autowired
 	private BookingService bService;
 	
 	@GetMapping("/booking/{customerId}")
-	public ResponseEntity<List<Booking>>  viewBookingById(@PathVariable("customerId") Integer Id) throws CustomerException
+	public ResponseEntity<List<Booking>>  viewBookingById(@PathVariable("customerId") Integer Id) throws UserException
 	{
 		List<Booking> list = bService.viewBookingById(Id);
 		

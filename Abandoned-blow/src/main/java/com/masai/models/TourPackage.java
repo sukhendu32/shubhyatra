@@ -27,20 +27,18 @@ public class TourPackage {
 	@NotNull @NotEmpty @NotBlank(message = "TourPackage name is mandatory")
 	private String tourPackageName;
 	
+	@NotNull(message = "TourPackage price is mandatory") 
+	@Min(value = 1500, message = "Minimum tourPackage price is 1500")
 	private Integer tourPackagePrice;
 	
 	@Min(value = 1, message = "Number of days must be greater than 0")
 	private Integer numberOfdays;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Flight flight;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Hotel hotel;
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Customer> customer;
 	
 	
 	public TourPackage() {
@@ -49,7 +47,7 @@ public class TourPackage {
 
 
 	public TourPackage(Integer tourPackageId, String tourPackageName, Integer tourPackagePrice, Integer numberOfdays,
-			Flight flight, Hotel hotel, List<Customer> customer) {
+			Flight flight, Hotel hotel, List<User> customer) {
 		super();
 		this.tourPackageId = tourPackageId;
 		this.tourPackageName = tourPackageName;
@@ -57,7 +55,7 @@ public class TourPackage {
 		this.numberOfdays = numberOfdays;
 		this.flight = flight;
 		this.hotel = hotel;
-		this.customer = customer;
+		
 	}
 
 
@@ -121,21 +119,14 @@ public class TourPackage {
 	}
 
 
-	public List<Customer> getCustomer() {
-		return customer;
-	}
-
-
-	public void setCustomer(List<Customer> customer) {
-		this.customer = customer;
-	}
+	
 
 
 	@Override
 	public String toString() {
 		return "TourPackage [tourPackageId=" + tourPackageId + ", tourPackageName=" + tourPackageName
 				+ ", tourPackagePrice=" + tourPackagePrice + ", numberOfdays=" + numberOfdays + ", flight=" + flight
-				+ ", hotel=" + hotel + ", customer=" + customer + "]";
+				+ ", hotel=" + hotel +  "]";
 	}
 	
 	

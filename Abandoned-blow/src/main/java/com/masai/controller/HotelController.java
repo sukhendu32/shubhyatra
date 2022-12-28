@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.exceptions.HotelException;
@@ -20,19 +21,20 @@ import com.masai.models.Hotel;
 import com.masai.services.HotelService;
 
 @RestController
+@RequestMapping("/travel")
 public class HotelController {
 	
 	@Autowired
 	private HotelService hService;
 	
-	@PostMapping("/hotel")
+	@PostMapping("/admin/hotel")
 	public ResponseEntity<Hotel>  registerHotel(@Valid @RequestBody Hotel hotel) throws HotelException
 	{
 		Hotel h = hService.registerHotel(hotel); 
 		return new ResponseEntity<Hotel>(h, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("/hotel/{hotelId}")
+	@DeleteMapping("/admin/hotel/{hotelId}")
 	public ResponseEntity<Hotel> deleteHotel(@PathVariable("hotelId") Integer Id) throws HotelException
 	{
 		
@@ -48,8 +50,8 @@ public class HotelController {
 		return new ResponseEntity<List<Hotel>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("/hotel/{customerId}")
-	public ResponseEntity<Hotel> findHotelById(@PathVariable("customerId") Integer Id) throws HotelException
+	@GetMapping("/hotel/{hotelId}")
+	public ResponseEntity<Hotel> findHotelById(@PathVariable("hotelId") Integer Id) throws HotelException
 	{
 		
 			Hotel h = hService.findHotelById(Id); 
@@ -57,7 +59,7 @@ public class HotelController {
 	
 	}
 	
-	@PutMapping("/hotel")
+	@PutMapping("/admin/hotel")
 	public ResponseEntity<Hotel> updateHotelDetails(@Valid @RequestBody Hotel hotel) throws HotelException
 	{
 		Hotel h = hService.updateHotel(hotel);

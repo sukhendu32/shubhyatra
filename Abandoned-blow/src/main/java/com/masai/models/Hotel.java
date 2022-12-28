@@ -29,17 +29,16 @@ public class Hotel {
 	@NotNull @NotEmpty @NotBlank(message = "Hotel location is mandatory")
 	private String hotelLocation;
 	
+	@NotNull(message = "Hotel price is mandatory") 
+	@Min(value = 300, message = "Minimum hotel price is 300")
 	private Integer hotelPrice;
 	
-	@Min(value = 0, message = "Rating should not be less than 0") @Max(value = 5 , message = "Rating should not be greater 5")
+	@Min(value = 1, message = "Rating should not be less than 1") @Max(value = 5 , message = "Rating should not be greater 5")
 	private Integer hotelRating;
 	
 	@Min(value = 1, message = "Minimum availabe rooms is 1")
 	private Integer availableRooms;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Customer> customer;
 	
 	
 	public Hotel() {
@@ -48,7 +47,7 @@ public class Hotel {
 
 
 	public Hotel(Integer hotelId, String hotelName, String hotelLocation, Integer hotelPrice, Integer hotelRating,
-			Integer availableRooms, List<Customer> customer) {
+			Integer availableRooms, List<User> customer) {
 		super();
 		this.hotelId = hotelId;
 		this.hotelName = hotelName;
@@ -56,7 +55,7 @@ public class Hotel {
 		this.hotelPrice = hotelPrice;
 		this.hotelRating = hotelRating;
 		this.availableRooms = availableRooms;
-		this.customer = customer;
+		
 	}
 
 
@@ -120,21 +119,14 @@ public class Hotel {
 	}
 
 
-	public List<Customer> getCustomer() {
-		return customer;
-	}
-
-
-	public void setCustomer(List<Customer> customer) {
-		this.customer = customer;
-	}
+	
 
 
 	@Override
 	public String toString() {
 		return "Hotel [hotelId=" + hotelId + ", hotelName=" + hotelName + ", hotelLocation=" + hotelLocation
 				+ ", hotelPrice=" + hotelPrice + ", hotelRating=" + hotelRating + ", availableRooms=" + availableRooms
-				+ ", customer=" + customer + "]";
+				+ ", customer=]";
 	}
 	
 	

@@ -13,8 +13,8 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalException {
 	
 	
-	@ExceptionHandler(CustomerException.class)
-	public ResponseEntity<MyErrorDetails> customerException(CustomerException ex, WebRequest wr)
+	@ExceptionHandler(UserException.class)
+	public ResponseEntity<MyErrorDetails> customerException(UserException ex, WebRequest wr)
 	{
 		MyErrorDetails err = new MyErrorDetails();
 		
