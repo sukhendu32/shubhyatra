@@ -44,7 +44,7 @@ This API performs all the fundamental CRUD operations and business logics of any
 
 - Admin can add report.
 
---Spring Security
+- Spring Security
 
 # Modules
 
